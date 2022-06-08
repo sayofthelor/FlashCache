@@ -46,6 +46,7 @@ class ImageCache {
 		graphic.persist = true;
 		graphic.destroyOnNoUse = false;
 		cacheFlxGraphic.set((makeOnlyPathName ? path : epicPath), graphic);
+		trace("Cached image: " + epicPath);
 		return graphic;
 	}
 
