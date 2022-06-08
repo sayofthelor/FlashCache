@@ -16,7 +16,7 @@ class FlashCache {
 	/**
 	 * Initializes `FlxCache`
 	 */
-	public function init():Void {
+	public function new():Void {
 		cacheFlxGraphic = new Map<String, FlxGraphic>();
 	}
 

@@ -6,7 +6,7 @@
 
 ## **Functions**
 
-`init()` initializes FlashCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
+`new()` initializes FlashCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
 
 `cacheGraphic(path:String, ?extension:String = "png", ?starter:String = "")` caches a single image, from `starter/path.extension`, with the key `path`. You **MUST** include `assets/` (or your asset folder name) in `path`.
 
@@ -28,14 +28,13 @@ import flixel.FlxG;
 import sys.FileSystem;
 
 class CachingScreen extends FlxState {
-    public static var imageCache:FlashCache;
+    public static var imageCache:FlashCache = new FlashCache();
     public override function create() {
         initCache();
         super.create();
     }
 
     public static function initCache() {
-        imageCache.init();
         for (i in FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images"))
         {
             imageCache.cacheGraphic(path);
