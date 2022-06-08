@@ -25,15 +25,15 @@ class FlashCache {
 	 * @param path The path to your image.
 	 * @return `FlxGraphic` The graphic you just cached.
 	 */
-	public function cacheGraphic(path:String, ?extension:String = "png", ?starter:String = ""):FlxGraphic {
+	public function cacheGraphic(path:String, ?starter:String = ""):FlxGraphic {
 		var data:BitmapData;
 
 		if (cacheFlxGraphic.exists(path)) {
 			return null; // prevents duplicates
 		}
-        var epicPath:String = starter + '/' + path + '.' + extension;
+        var epicPath:String = starter + (starter == "" ? "" : "/") + path;
         trace("epicPath: " + epicPath);
-        try (data = Assets.getBitmapData(epicPath))
+        try (data = BitmapData.fromFile(epicPath))
         catch(e) {
 			trace("Error loading image: " + path);
 			return null;
@@ -50,7 +50,6 @@ class FlashCache {
 		if (cacheFlxGraphic.exists(path))
 			return cacheFlxGraphic.get(path); // too cool for schoold
 
-		trace("Error getting graphic: " + path + " (or not cached)");
 		return null;
 	}
 
