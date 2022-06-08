@@ -1,6 +1,7 @@
 package flashcache;
 import openfl.display.BitmapData;
 import flixel.graphics.FlxGraphic;
+import openfl.Assets;
 using StringTools;
 
 /*

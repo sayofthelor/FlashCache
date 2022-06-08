@@ -6,7 +6,7 @@
 
 ## **Functions**
 
-`init()` initializes FlashCache. Should **always** be attached to a public non-static variable, ideally either in `Main.hx` or your own custom caching state.
+`init()` initializes FlashCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
 
 `cacheGraphic(path:String, ?extension:String = "png", ?starter:String = "")` caches a single image, from `starter/path.extension`, with the key `path`. You **MUST** include `assets/` (or your asset folder name) in `path`.
 
