@@ -1,0 +1,16 @@
+{
+    "name": "FlashCache",
+    "url" : "https://github.com/sayofthelor/FlashCache/",
+    "license": "GPL",
+    "tags": ["openfl", "flixel", "haxeflixel", "cache", "caching"],
+    "description": "Image cacher for HaxeFlixel. Makes games speedy fast.",
+    "version": "1.0.0",
+    "classPath": "src/",
+    "releasenote": "Initial release",
+    "contributors": ["sayofthelor"],
+    "dependencies": {
+        "openfl":"",
+        "flixel":""
+    },
+    "main": "flashcache.FlashCache"
+  }
