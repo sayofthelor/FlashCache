@@ -18,6 +18,8 @@
 
 `uncacheGraphicGroup(tag:Array<String>)` uncaches a group of images at the path specified in `tag` if they are cached.
 
+### **Another Note:** Don't clear memory when this is active or else there is literally no point.
+
 ## **Example State**
 
 ```hx
@@ -37,7 +39,7 @@ class CachingScreen extends FlxState {
     public static function initCache() {
         for (i in FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images"))
         {
-            imageCache.cacheGraphic(path, "");
+            imageCache.cacheGraphic(path, "png");
         }
         FlxG.switchState(new TitleScreen());
     }
