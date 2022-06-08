@@ -31,8 +31,7 @@ class FlashCache {
 		if (cacheFlxGraphic.exists(path)) {
 			return null; // prevents duplicates
 		}
-        var epicPath:String = starter + path + '.' + extension;
-        trace(epicPath);
+        var epicPath:String = starter + '/' + path + '.' + extension;
         try (data = Assets.getBitmapData(epicPath))
         catch(e) {
 			trace("Error loading image: " + path);
