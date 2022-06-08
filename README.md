@@ -8,7 +8,7 @@
 
 `new()` initializes FlashCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
 
-`cacheGraphic(path:String, ?starter:String = "")` caches a single image, from `starter/path`, with the key `path`. You **MUST** include `assets/` (or your asset folder name) in `path`.
+`cacheGraphic(path:String, ?starter:String = "")` caches a single image, from `starter/path`, with the key `path`. You **MUST NOT** include the file extension, and you **MUST** include `assets/` (or your asset folder name) in either `path` or `starter`. Feel free to include more of the path, depending on what you want to type in.
 
 `getGraphic(path:String)` either returns your cached FlxGraphic if it exists or `null` if it doesn't.
 
@@ -37,7 +37,7 @@ class CachingScreen extends FlxState {
     public static function initCache() {
         for (i in FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images"))
         {
-            imageCache.cacheGraphic(path);
+            imageCache.cacheGraphic(path, "");
         }
         FlxG.switchState(new TitleScreen());
     }
