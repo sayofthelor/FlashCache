@@ -51,7 +51,7 @@ function getImage(path:String):FlxGraphic {
     var img:FlxGraphic = CachingScreen.imageCache.getGraphic(path);
     if (img != null) return img;
     else {
-        // image getting code here
+        return null;
     }
 }
 ```
