@@ -15,7 +15,7 @@ class FlashCache {
 	/**
 	 * Initializes `FlxCache`
 	 */
-	public static function init():Void {
+	public function new():Void {
 		cacheFlxGraphic = new Map<String, FlxGraphic>();
 		trace("Shameless plug: Made by sayofthelor (with contribution from vidyagirl!)");
 	}
