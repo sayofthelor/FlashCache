@@ -28,7 +28,7 @@ class ImageCache {
 	 * @param path The path to your image.
 	 * @param makeOnlyPathName determines whether or not the image key includes assetPath and the file extension.
 	 */
-	public function cacheGraphic(path:String, ?makeOnlyPathName:Bool = false) {
+	public function cacheGraphic(path:String, ?makeOnlyPathName:Bool = false):Null<Void> {
 		var data:BitmapData;
 		var epicPath:String = assetPath + (assetPath == "" ? "" : "/") + path + '.' + extension;
 

@@ -1,4 +1,4 @@
-package src.flashcache;
+package flashcache;
 
 import openfl.Assets;
 import openfl.media.Sound;
