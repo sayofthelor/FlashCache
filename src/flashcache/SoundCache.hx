@@ -10,6 +10,7 @@ import openfl.utils.AssetType;
     Pretty much just FlxG.sound.cache with a few extra features.
 */
 class SoundCache {
+    public function new() {}
     public function cacheSound(path:String):Sound {
         if (Assets.exists(path, AssetType.SOUND) || Assets.exists(path, AssetType.MUSIC))
 			return Assets.getSound(path, true);
