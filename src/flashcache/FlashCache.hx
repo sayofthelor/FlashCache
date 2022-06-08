@@ -15,9 +15,8 @@ class FlashCache {
 	/**
 	 * Initializes `FlxCache`
 	 */
-	public function new():Void {
+	public function init():Void {
 		cacheFlxGraphic = new Map<String, FlxGraphic>();
-		trace("Shameless plug: Made by sayofthelor (with contribution from vidyagirl!)");
 	}
 
 	/**
@@ -25,14 +24,14 @@ class FlashCache {
 	 * @param path The path to your image.
 	 * @return `FlxGraphic` The graphic you just cached.
 	 */
-	public static function cacheImage(path:String):FlxGraphic {
+	public static function cacheGraphic(path:String, starter:String = "", extension:String):FlxGraphic {
 		var data:BitmapData;
 
 		if (cacheFlxGraphic.exists(path)) {
 			return null; // prevents duplicates
 		}
-		if (Assets.exists(path)) {
-			data = BitmapData.fromFile(path);
+		if (Assets.exists(starter + path + extension)) {
+			data = BitmapData.fromFile(starter + path + extension);
 		}
 		else {
 			trace("Error loading image: " + path);
