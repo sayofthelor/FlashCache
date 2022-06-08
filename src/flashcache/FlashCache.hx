@@ -31,13 +31,12 @@ class FlashCache {
 		if (cacheFlxGraphic.exists(path)) {
 			return null; // prevents duplicates
 		}
-		if (Assets.exists(starter + path + '.' + extension)) {
-			data = BitmapData.fromFile(starter + path + extension);
-		}
-		else {
+        var epicPath:String = starter + path + '.' + extension;
+        try (data = Assets.getBitmapData(epicPath))
+        catch(e) {
 			trace("Error loading image: " + path);
 			return null;
-		}
+        }
 
 		var graphic:FlxGraphic = FlxGraphic.fromBitmapData(data);
 		graphic.persist = true;
