@@ -7,7 +7,7 @@
     "version": "1.0.0",
     "classPath": "src/",
     "releasenote": "Initial release",
-    "contributors": ["sayofthelor", "vidyagirl"],
+    "contributors": ["sayofthelor"],
     "dependencies": {
         "openfl":"",
         "flixel":""
