@@ -25,13 +25,13 @@ class FlashCache {
 	 * @param path The path to your image.
 	 * @return `FlxGraphic` The graphic you just cached.
 	 */
-	public function cacheGraphic(path:String, ?starter:String = ""):FlxGraphic {
+	public function cacheGraphic(path:String, extension:String = "png", ?starter:String = ""):FlxGraphic {
 		var data:BitmapData;
 
 		if (cacheFlxGraphic.exists(path)) {
 			return null; // prevents duplicates
 		}
-        var epicPath:String = starter + (starter == "" ? "" : "/") + path;
+        var epicPath:String = starter + (starter == "" ? "" : "/") + path + '.' + extension;
         trace("epicPath: " + epicPath);
         try (data = BitmapData.fromFile(epicPath))
         catch(e) {
