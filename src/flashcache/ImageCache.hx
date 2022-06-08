@@ -11,8 +11,8 @@ using StringTools;
 
 class ImageCache {
 	public static var cacheFlxGraphic:Map<String, FlxGraphic>;
-	public static var assetPath:String = "assets/";
-	public static var extension:String = "png";
+	public var assetPath:String = "assets/";
+	public var extension:String = "png";
 
 	/**
 	 * Initializes `FlxCache`
