@@ -24,7 +24,7 @@ class FlashCache {
 	 * @param path The path to your image.
 	 * @return `FlxGraphic` The graphic you just cached.
 	 */
-	public static function cacheGraphic(path:String, ?extension:String = "png", ?starter:String = ""):FlxGraphic {
+	public function cacheGraphic(path:String, ?extension:String = "png", ?starter:String = ""):FlxGraphic {
 		var data:BitmapData;
 
 		if (cacheFlxGraphic.exists(path)) {
@@ -45,7 +45,7 @@ class FlashCache {
 		return graphic;
 	}
 
-	public static function getGraphic(path:String):Null<FlxGraphic> {
+	public function getGraphic(path:String):Null<FlxGraphic> {
 		if (cacheFlxGraphic.exists(path))
 			return cacheFlxGraphic.get(path); // too cool for schoold
 
@@ -53,11 +53,11 @@ class FlashCache {
 		return null;
 	}
 
-	public static function uncacheAllGraphics():Void {
+	public function uncacheAllGraphics():Void {
 		cacheFlxGraphic.clear();
 	}
 
-	public static function uncacheGraphic(tag:String):Bool {
+	public function uncacheGraphic(tag:String):Bool {
 		if (cacheFlxGraphic.exists(tag)) {
 			cacheFlxGraphic.get(tag).destroy();
 			cacheFlxGraphic.remove(tag);
@@ -68,7 +68,7 @@ class FlashCache {
 		return false;
 	}
 
-	public static function uncachGraphicGroup(keys:Array<String>):Void {
+	public function uncachGraphicGroup(keys:Array<String>):Void {
 		for (tag in keys) {
 			if (cacheFlxGraphic.exists(tag)) {
 				cacheFlxGraphic.get(tag).destroy();
