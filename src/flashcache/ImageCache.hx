@@ -28,7 +28,7 @@ class ImageCache {
 	 * @param path The path to your image.
 	 * @param makeOnlyPathName determines whether or not the image key includes assetPath and the file extension.
 	 */
-	public function cacheGraphic(path:String, ?makeOnlyPathName:Bool = false):Null<Void> {
+	public function cacheGraphic(path:String, ?makeOnlyPathName:Bool = false):FlxGraphic {
 		var data:BitmapData;
 		var epicPath:String = assetPath + (assetPath == "" ? "" : "/") + path + '.' + extension;
 
@@ -46,6 +46,7 @@ class ImageCache {
 		graphic.persist = true;
 		graphic.destroyOnNoUse = false;
 		cacheFlxGraphic.set((makeOnlyPathName ? path : epicPath), graphic);
+		return graphic;
 	}
 
 	public function getGraphic(path:String):Null<FlxGraphic> {
