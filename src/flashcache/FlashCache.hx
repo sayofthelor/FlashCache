@@ -10,53 +10,74 @@ using StringTools;
 */
 
 class FlashCache {
-    public static var cacheFlxGraphic:Map<String, FlxGraphic>;
-    public function new():Void {
-        init();
-        trace("Using FlashCache by sayofthelor"); // who doesn't want a shameless plug?
-    }
-    public static function init():Void {
-        cacheFlxGraphic = new Map<String, FlxGraphic>();
-    }
-    public static function cacheImage(path:String, extension:String):Void {
-        path = path + extension;
-        if (cacheFlxGraphic.containsKey(path)) return; // prevents duplicates
-        try (var data:BitmapData = BitmapData.fromFile(path))
-        catch (e:Error) {
-            trace("Error loading image: " + path + " (" + e.error + ")");
-            return;
-        }
-        var graphic:FlxGraphic = FlxGraphic.fromBitmapData(data);
-        graph.persist = true;
-        graph.destroyOnNoUse = false;
-        cacheFlxGraphic.set(path, graphic);
-        trace("Successfully cached image at " + path);
-    }
-    public static function getGraphic(path:String):Null<FlxGraphic> {
-        try (return cacheFlxGraphic.get(path)) // too cool for school
-        catch (e:Error) {
-            trace("Error getting graphic: " + path + " (or not cached)");
-            return null;
-        }
-    }
-    public static function uncacheAllGraphics():Void {
-        cacheFlxGraphic = null;
-        init();
-    }
-    public static function uncacheGraphic(tag:String):Void {
-        if (cacheFlxGraphic.containsKey(tag)) {
-            cacheFlxGraphic.get(tag).destroy();
-            cacheFlxGraphic.remove(tag);
-            trace("Successfully uncached image at " + tag);
-        } else trace(tag + " not found in cache");
-    }
-    public static function uncachGraphiceGroup(tag:Array<String>):Void {
-        for (i in tag) {
-            if (cacheFlxGraphic.containsKey(tag[i])) {
-                cacheFlxGraphic.get(tag[i]).destroy();
-                cacheFlxGraphic.remove(tag[i]);
-                trace("Successfully uncached image at " + tag[i]);
-            } else trace(tag[i] + " not found in cache");
-        }
-    }
+	public static var cacheFlxGraphic:Map<String, FlxGraphic>;
+
+	/**
+	 * Initializes `FlxCache`
+	 */
+	public static function init():Void {
+		cacheFlxGraphic = new Map<String, FlxGraphic>();
+		trace("Shameless plug: Made by sayofthelor (with contribution from vidyagirl!)");
+	}
+
+	/**
+	 * Add an entry to the image cache.
+	 * @param path The path to your image.
+	 * @return `FlxGraphic` The graphic you just cached.
+	 */
+	public static function cacheImage(path:String):FlxGraphic {
+		var data:BitmapData;
+
+		if (cacheFlxGraphic.exists(path)) {
+			return null; // prevents duplicates
+		}
+		if (Assets.exists(path)) {
+			data = BitmapData.fromFile(path);
+		}
+		else {
+			trace("Error loading image: " + path);
+			return null;
+		}
+
+		var graphic:FlxGraphic = FlxGraphic.fromBitmapData(data);
+		graphic.persist = true;
+		graphic.destroyOnNoUse = false;
+		cacheFlxGraphic.set(path, graphic);
+		return graphic;
+	}
+
+	public static function getGraphic(path:String):Null<FlxGraphic> {
+		if (cacheFlxGraphic.exists(path))
+			return cacheFlxGraphic.get(path); // too cool for schoold
+
+		trace("Error getting graphic: " + path + " (or not cached)");
+		return null;
+	}
+
+	public static function uncacheAllGraphics():Void {
+		cacheFlxGraphic.clear();
+	}
+
+	public static function uncacheGraphic(tag:String):Bool {
+		if (cacheFlxGraphic.exists(tag)) {
+			cacheFlxGraphic.get(tag).destroy();
+			cacheFlxGraphic.remove(tag);
+			trace("Successfully uncached image at " + tag);
+			return true;
+		}
+		trace(tag + " not found in cache");
+		return false;
+	}
+
+	public static function uncachGraphicGroup(keys:Array<String>):Void {
+		for (tag in keys) {
+			if (cacheFlxGraphic.exists(tag)) {
+				cacheFlxGraphic.get(tag).destroy();
+				cacheFlxGraphic.remove(tag);
+				trace("Successfully uncached image at " + tag);
+			}
+			else
+				trace(tag + " not found in cache");
+		}
+	}
 }
