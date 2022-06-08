@@ -4,9 +4,9 @@
 
 ### Somewhat adapted from [**Kade Engine**](http://github.com/KadeDev/Kade-Engine)
 
-## **Functions**
+## **Functions (ImageCache)**
 
-`new()` initializes FlashCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
+`new()` initializes ImageCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
 
 `cacheGraphic(path:String, extension:String = "png", ?starter:String = "")` caches a single image, from `starter/path.extension`, with the key `path`. You **MUST NOT** include the file extension, and you **MUST** include `assets/` (or your asset folder name) in either `path` or `starter`. Feel free to include more of the path, depending on what you want to type in.
 
@@ -23,14 +23,14 @@
 ## **Example State**
 
 ```hx
-import flashcache.FlashCache;
+import flashcache.ImageCache;
 import flixel.text.FlxText;
 import flixel.FlxState;
 import flixel.FlxG;
 import sys.FileSystem;
 
 class CachingScreen extends FlxState {
-    public static var imageCache:FlashCache = new FlashCache();
+    public static var imageCache:ImageCache = new ImageCache();
     public override function create() {
         initCache();
         super.create();

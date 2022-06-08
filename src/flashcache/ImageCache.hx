@@ -1,7 +1,6 @@
 package flashcache;
 import openfl.display.BitmapData;
 import flixel.graphics.FlxGraphic;
-import openfl.Assets;
 using StringTools;
 
 /*
@@ -10,29 +9,33 @@ using StringTools;
     so it's a good idea to make this optional if you are.
 */
 
-class FlashCache {
+class ImageCache {
 	public static var cacheFlxGraphic:Map<String, FlxGraphic>;
+	public static var assetPath:String = "assets/";
+	public static var extension:String = "png";
 
 	/**
 	 * Initializes `FlxCache`
 	 */
-	public function new():Void {
+	public function new(?assetPath:String = "assets/", ?extension:String = "png"):Void {
+		this.assetPath = assetPath;
+		this.extension = extension;
 		cacheFlxGraphic = new Map<String, FlxGraphic>();
 	}
 
 	/**
 	 * Add an entry to the image cache.
 	 * @param path The path to your image.
-	 * @return `FlxGraphic` The graphic you just cached.
+	 * @param makeOnlyPathName determines whether or not the image key includes assetPath and the file extension.
 	 */
-	public function cacheGraphic(path:String, extension:String = "png", ?starter:String = ""):FlxGraphic {
+	public function cacheGraphic(path:String, ?makeOnlyPathName:Bool = false):Void {
 		var data:BitmapData;
+		var epicPath:String = assetPath + (assetPath == "" ? "" : "/") + path + '.' + extension;
 
-		if (cacheFlxGraphic.exists(path)) {
+		if (cacheFlxGraphic.exists(makeOnlyPathName ? path : epicPath)) {
 			return null; // prevents duplicates
 		}
-        var epicPath:String = starter + (starter == "" ? "" : "/") + path + '.' + extension;
-        trace("epicPath: " + epicPath);
+
         try (data = BitmapData.fromFile(epicPath))
         catch(e) {
 			trace("Error loading image: " + path);
@@ -42,8 +45,7 @@ class FlashCache {
 		var graphic:FlxGraphic = FlxGraphic.fromBitmapData(data);
 		graphic.persist = true;
 		graphic.destroyOnNoUse = false;
-		cacheFlxGraphic.set(path, graphic);
-		return graphic;
+		cacheFlxGraphic.set((makeOnlyPathName ? path : epicPath), graphic);
 	}
 
 	public function getGraphic(path:String):Null<FlxGraphic> {
@@ -68,15 +70,9 @@ class FlashCache {
 		return false;
 	}
 
-	public function uncachGraphicGroup(keys:Array<String>):Void {
+	public function uncacheGraphicGroup(keys:Array<String>):Void {
 		for (tag in keys) {
-			if (cacheFlxGraphic.exists(tag)) {
-				cacheFlxGraphic.get(tag).destroy();
-				cacheFlxGraphic.remove(tag);
-				trace("Successfully uncached image at " + tag);
-			}
-			else
-				trace(tag + " not found in cache");
+			uncacheGraphic(tag);
 		}
 	}
 }
