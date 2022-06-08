@@ -6,7 +6,7 @@
 
 ## **Functions**
 
-`new()` initializes FlashCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
+`init()` initializes FlashCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
 
 `cacheGraphic(path:String, starter:String = "", extension:String)` caches a single image, from `starter/path.extension`, with the key `path`. You **MUST** include `assets/` (or your asset folder name) in `path`.
 
@@ -28,13 +28,14 @@ import flixel.FlxG;
 import sys.FileSystem;
 
 class CachingScreen extends FlxState {
-    public static var imageCache:FlashCache = new FlashCache();
+    public static var imageCache:FlashCache;
     public override function create() {
         initCache();
         super.create();
     }
 
     public static function initCache() {
+        imageCache.init
         for (i in FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images"))
         {
             imageCache.cacheGraphic(path);
@@ -43,14 +44,62 @@ class CachingScreen extends FlxState {
     }
 }
 ```
-## **Example of Loading Cached Graphic**
+## **Example of Loading a Cached Graphic**
 
 ```hx
 function getImage(path:String):FlxGraphic {
     var img:FlxGraphic = CachingScreen.imageCache.getGraphic(path);
     if (img != null) return img;
     else {
-        // image getting code here
+        return null;
     }
+}
+```
+
+## **Example of Caching a Graphic**
+
+```hx
+function cacheBackgrounds() {
+    CachingScreen.imageCache.cacheImage('menuBackground');
+    CachingScreen.imageCache.cacheImage('optionsBackground');
+    CachingScreen.imageCache.cacheImage('gameBackground');
+}
+```
+
+## **Example of Getting a Cached Graphic**
+
+```hx
+function cachePlayerGraphic() {
+    if (player.skin == "gold") {
+        CachingScreen.imageCache.getGraphic('player-gold');
+    }
+}
+```
+
+## **Example of Uncaching a Graphic**
+
+```hx
+function uncacheTiles() {
+    for (p in tilePaths) {
+        CachingScreen.imageCache.uncacheGraphic(p);
+    }
+}
+```
+
+## **Example of Uncaching All Graphics**
+
+```hx
+function lowGraphicsCacheManagement() {
+    if (someVariableThatStoresMemoryUser > lowGraphicsMemoryLimit) {
+        CachingScreen.imageCache.uncacheAllGraphics();
+    }
+}
+```
+
+## **Example of Uncaching a Graphic Group**
+
+```hx
+inline function uncacheMenuSprites() {
+    CachingScreen.imageCache.uncacheGraphicGroup(menuSpritePaths);
 }
 ```
