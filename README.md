@@ -4,11 +4,11 @@
 
 ### Somewhat adapted from [**Kade Engine**](http://github.com/KadeDev/Kade-Engine)
 
-## **Functions**
+## **Functions (ImageCache)**
 
-`new()` initializes FlashCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
+`new()` initializes ImageCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
 
-`cacheImage(path:String, extension:String)` caches a single image. You **MUST** include `assets/` (or your asset folder name) in `path`.
+`cacheGraphic(path:String, extension:String = "png", ?starter:String = "")` caches a single image, from `starter/path.extension`, with the key `path`. You **MUST NOT** include the file extension, and you **MUST** include `assets/` (or your asset folder name) in either `path` or `starter`. Feel free to include more of the path, depending on what you want to type in.
 
 `getGraphic(path:String)` either returns your cached FlxGraphic if it exists or `null` if it doesn't.
 
@@ -18,17 +18,19 @@
 
 `uncacheGraphicGroup(tag:Array<String>)` uncaches a group of images at the path specified in `tag` if they are cached.
 
+### **Another Note:** Don't clear memory when this is active or else there is literally no point.
+
 ## **Example State**
 
 ```hx
-import flashcache.FlashCache;
+import flashcache.ImageCache;
 import flixel.text.FlxText;
 import flixel.FlxState;
 import flixel.FlxG;
 import sys.FileSystem;
 
 class CachingScreen extends FlxState {
-    public static var imageCache:FlashCache = new FlashCache();
+    public static var imageCache:ImageCache = new ImageCache();
     public override function create() {
         initCache();
         super.create();
@@ -37,20 +39,68 @@ class CachingScreen extends FlxState {
     public static function initCache() {
         for (i in FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images"))
         {
-            imageCache.cacheGraphic(path);
+            imageCache.cacheGraphic(path, "png");
         }
         FlxG.switchState(new TitleScreen());
     }
 }
 ```
-## **Example of Loading Cached Graphic**
+## **Example of Loading a Cached Graphic**
 
 ```hx
 function getImage(path:String):FlxGraphic {
     var img:FlxGraphic = CachingScreen.imageCache.getGraphic(path);
     if (img != null) return img;
     else {
-        // image getting code here
+        return null;
     }
+}
+```
+
+## **Example of Caching a Graphic**
+
+```hx
+function cacheBackgrounds() {
+    CachingScreen.imageCache.cacheGraphic('menuBackground');
+    CachingScreen.imageCache.cacheGraphic('optionsBackground');
+    CachingScreen.imageCache.cacheGraphic('gameBackground');
+}
+```
+
+## **Example of Getting a Cached Graphic**
+
+```hx
+function cachePlayerGraphic() {
+    if (player.skin == "gold") {
+        CachingScreen.imageCache.getGraphic('player-gold');
+    }
+}
+```
+
+## **Example of Uncaching a Graphic**
+
+```hx
+function uncacheTiles() {
+    for (p in tilePaths) {
+        CachingScreen.imageCache.uncacheGraphic(p);
+    }
+}
+```
+
+## **Example of Uncaching All Graphics**
+
+```hx
+function lowGraphicsCacheManagement() {
+    if (someVariableThatStoresMemoryUser > lowGraphicsMemoryLimit) {
+        CachingScreen.imageCache.uncacheAllGraphics();
+    }
+}
+```
+
+## **Example of Uncaching a Graphic Group**
+
+```hx
+inline function uncacheMenuSprites() {
+    CachingScreen.imageCache.uncacheGraphicGroup(menuSpritePaths);
 }
 ```
