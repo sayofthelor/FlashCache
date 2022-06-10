@@ -1,8 +1,11 @@
 # **FlashCache**
-## Image cacher for **HaxeFlixel**. Makes games **speedy fast.**
+## Work-in-progress general-purpose cacher for **HaxeFlixel**. Makes games **speedy fast.**
 ### **Note:** This uses a hell of a lot of memory if you cache a lot of stuff, so it's a good idea to make this optional if you are.
 
-### Somewhat adapted from [**Kade Engine**](http://github.com/KadeDev/Kade-Engine)
+### ImageCache adapted from [**Kade Engine**](http://github.com/KadeDev/Kade-Engine)
+
+### Currently functional: ImageCache, SoundCache (partially)
+## **KEEP IN MIND, FUNCTIONS MAY CHANGE! WE AREN'T RESPONSIBLE IF THIS BREAKS YOUR CODE.**
 
 ## **Functions (ImageCache)**
 
@@ -24,13 +27,21 @@
 
 ```hx
 import flashcache.ImageCache;
+import flashcache.SoundCache;
 import flixel.text.FlxText;
 import flixel.FlxState;
 import flixel.FlxG;
 import sys.FileSystem;
 
+/*
+    Example caching state for FlashCache.
+    Will be updated over time.
+*/
+
 class CachingScreen extends FlxState {
+    // Both ImageCache and SoundCache have constructors that *must* be used before doing anything with them.
     public static var imageCache:ImageCache = new ImageCache();
+    public static var soundCache:SoundCache = new SoundCache();
     public override function create() {
         initCache();
         super.create();
@@ -38,9 +49,8 @@ class CachingScreen extends FlxState {
 
     public static function initCache() {
         for (i in FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images"))
-        {
-            imageCache.cacheGraphic(path, "png");
-        }
+            imageCache.cacheGraphic(i, "png");
+        soundCache.cacheSoundGroup(FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/sounds"))
         FlxG.switchState(new TitleScreen());
     }
 }
