@@ -6,14 +6,15 @@
 
 ### Currently functional: ImageCache, SoundCache (partially)
 ## **KEEP IN MIND, FUNCTIONS MAY CHANGE! WE AREN'T RESPONSIBLE IF THIS BREAKS YOUR CODE.**
+## **ANOTHER NOTE:** Psych Engine and any derivative mods of it contain a lot of existing things relating to image loading that are required to be changed in order for this to not be woefully inefficient.
 
 ## **Functions (ImageCache)**
 
 `new()` initializes ImageCache. Should **always** be attached to a public static variable, ideally either in `Main.hx` or your own custom caching state.
 
-`cacheGraphic(path:String, extension:String = "png", ?starter:String = "")` caches a single image, from `starter/path.extension`, with the key `path`. You **MUST NOT** include the file extension, and you **MUST** include `assets/` (or your asset folder name) in either `path` or `starter`. Feel free to include more of the path, depending on what you want to type in.
+`cacheGraphic(path:String, extension:String = "png", ?starter:String = "")` caches a single image, from `starter/path.extension`, with the key `path`. You **MUST NOT** include the file extension, and you **MUST** include `assets/` (or your asset folder name) in either `path` or `starter`. Feel free to include more of the path, depending on what you want to type into `getGraphic` to get your graphic.
 
-`getGraphic(path:String)` either returns your cached FlxGraphic if it exists or `null` if it doesn't.
+`getGraphic(path:String)` either returns your cached FlxGraphic if it exists or `null` if it doesn't. To retrieve the graphic, type what you typed into `path` when you cached the graphic.
 
 `uncacheAllGraphics()` clears the image cache.
 
@@ -31,6 +32,7 @@ import flashcache.SoundCache;
 import flixel.text.FlxText;
 import flixel.FlxState;
 import flixel.FlxG;
+import flixel.util.FlxColor;
 import sys.FileSystem;
 
 /*
@@ -43,14 +45,16 @@ class CachingScreen extends FlxState {
     public static var imageCache:ImageCache = new ImageCache();
     public static var soundCache:SoundCache = new SoundCache();
     public override function create() {
+        add(new FlxText(20, 20, 0, "Caching..." 32).setFormat('assets/fonts/segoe.ttf', FlxColor.WHITE, LEFT));
         initCache();
         super.create();
     }
 
     public static function initCache() {
         for (i in FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images"))
-            imageCache.cacheGraphic(i, "png");
-        soundCache.cacheSoundGroup(FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/sounds"))
+            imageCache.cacheGraphic(i, "png", "assets/shared/images");
+        var sounds:String = FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/sounds");
+        soundCache.cacheSoundGroup(sounds);
         FlxG.switchState(new TitleScreen());
     }
 }
@@ -71,9 +75,9 @@ function getImage(path:String):FlxGraphic {
 
 ```hx
 function cacheBackgrounds() {
-    CachingScreen.imageCache.cacheGraphic('menuBackground');
-    CachingScreen.imageCache.cacheGraphic('optionsBackground');
-    CachingScreen.imageCache.cacheGraphic('gameBackground');
+    CachingScreen.imageCache.cacheGraphic('bg/menuBackground', 'png', 'assets/images');
+    CachingScreen.imageCache.cacheGraphic('bg/optionsBackground', 'png', 'assets/images');
+    CachingScreen.imageCache.cacheGraphic('bg/gameBackground', 'png', 'assets/images');
 }
 ```
 
