@@ -75,9 +75,9 @@ function getImage(path:String):FlxGraphic {
 
 ```hx
 function cacheBackgrounds() {
-    CachingScreen.imageCache.cacheGraphic('bg/menuBackground', 'png'');
-    CachingScreen.imageCache.cacheGraphic('bg/optionsBackground', 'png');
-    CachingScreen.imageCache.cacheGraphic('bg/gameBackground', 'png');
+    CachingScreen.imageCache.cacheGraphic('bg/menuBackground', true);
+    CachingScreen.imageCache.cacheGraphic('bg/optionsBackground', true);
+    CachingScreen.imageCache.cacheGraphic('bg/gameBackground', true);
 }
 ```
 
@@ -86,7 +86,7 @@ function cacheBackgrounds() {
 ```hx
 function cachePlayerGraphic() {
     if (foo.skin == "bar") {
-        CachingScreen.imageCache.getGraphic('bar');
+        CachingScreen.imageCache.getGraphic('skins/bar');
     }
 }
 ```
