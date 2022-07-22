@@ -42,7 +42,7 @@ import sys.FileSystem;
 
 class CachingScreen extends FlxState {
     // Both ImageCache and SoundCache have constructors that *must* be used before doing anything with them.
-    public static var imageCache:ImageCache = new ImageCache();
+    public static var imageCache:ImageCache = new ImageCache("assets/shared/images", "png");
     public static var soundCache:SoundCache = new SoundCache();
     public override function create() {
         add(new FlxText(20, 20, 0, "Caching..." 32).setFormat('assets/fonts/segoe.ttf', FlxColor.WHITE, LEFT));
@@ -52,7 +52,7 @@ class CachingScreen extends FlxState {
 
     public static function initCache() {
         for (i in FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images"))
-            imageCache.cacheGraphic(i, "png", "assets/shared/images");
+            imageCache.cacheGraphic(i, true);
         var sounds:String = FileSystem.readFileSystem.readDirectory(FileSystem.absolutePath("assets/shared/sounds");
         soundCache.cacheSoundGroup(sounds);
         FlxG.switchState(new TitleScreen());
@@ -63,8 +63,8 @@ class CachingScreen extends FlxState {
 
 ```hx
 function getImage(path:String):FlxGraphic {
-    var img:FlxGraphic = CachingScreen.imageCache.getGraphic(path);
-    if (img != null) return img;
+    var foo:FlxGraphic = CachingScreen.imageCache.getGraphic(path);
+    if (foo != null) return foo;
     else {
         return null;
     }
@@ -75,9 +75,9 @@ function getImage(path:String):FlxGraphic {
 
 ```hx
 function cacheBackgrounds() {
-    CachingScreen.imageCache.cacheGraphic('bg/menuBackground', 'png', 'assets/images');
-    CachingScreen.imageCache.cacheGraphic('bg/optionsBackground', 'png', 'assets/images');
-    CachingScreen.imageCache.cacheGraphic('bg/gameBackground', 'png', 'assets/images');
+    CachingScreen.imageCache.cacheGraphic('bg/menuBackground', 'png'');
+    CachingScreen.imageCache.cacheGraphic('bg/optionsBackground', 'png');
+    CachingScreen.imageCache.cacheGraphic('bg/gameBackground', 'png');
 }
 ```
 
@@ -85,8 +85,8 @@ function cacheBackgrounds() {
 
 ```hx
 function cachePlayerGraphic() {
-    if (player.skin == "gold") {
-        CachingScreen.imageCache.getGraphic('player-gold');
+    if (foo.skin == "bar") {
+        CachingScreen.imageCache.getGraphic('bar');
     }
 }
 ```
@@ -95,7 +95,7 @@ function cachePlayerGraphic() {
 
 ```hx
 function uncacheTiles() {
-    for (p in tilePaths) {
+    for (p in foo) {
         CachingScreen.imageCache.uncacheGraphic(p);
     }
 }
@@ -105,7 +105,7 @@ function uncacheTiles() {
 
 ```hx
 function lowGraphicsCacheManagement() {
-    if (someVariableThatStoresMemoryUser > lowGraphicsMemoryLimit) {
+    if (storeMemVarOrSomething > memLimit) {
         CachingScreen.imageCache.uncacheAllGraphics();
     }
 }
