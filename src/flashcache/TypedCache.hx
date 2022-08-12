@@ -88,6 +88,11 @@ class TypedCache<T>
 	public inline function exists(key:String):Bool
 		return cache.exists(key);
 
+	/**
+	* Get an item from the cache
+	@param key The key paired to the item you want to retrieve
+	@return `T`
+	*/
 	public inline function get(key:String)
 		return cache.get(key);
 }
