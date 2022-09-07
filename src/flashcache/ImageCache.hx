@@ -19,7 +19,9 @@ class ImageCache {
 	}
 
 	/**
-	 * Initializes `FlxCache`
+	 * Initializes ImageCache instance
+	 * @param assetPath Path to assets folder, "assets/" by default
+	 * @param extension Extension of assets, "png" by default
 	 */
 	public function new(?assetPath:String = "assets/", ?extension:String = "png"):Void {
 		this.assetPath = assetPath;
