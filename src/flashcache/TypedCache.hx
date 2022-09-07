@@ -8,6 +8,11 @@ class TypedCache<T>
 	private var cache:Map<String, T>;
 	private var thingName:String = "TypedCache";
 
+	/**
+	 * Automatically called when traced, added to a string, etc.
+	 * @return String
+	 */
+
 	public static inline function toString():String {
 		return thingName + " instance \\\\ Cached assets: " + cache.length;
 	}
@@ -54,6 +59,7 @@ class TypedCache<T>
 	 * @param path Path to the item
 	 * @param uncacheFunction A function to run to properly close an item before uncaching (This runs before the function uncaches the item!)
 	 */
+
 	public function uncacheItem(key:String, uncacheFunction:T->Void)
 	{
 		if (cache.exists(key))
@@ -68,7 +74,8 @@ class TypedCache<T>
 	 * Uncaches an item group
 	 * @param paths A list of the paths of items
 	 * @param uncacheFunction A function to run to properly close items before uncaching (This runs before the function uncaches the items!)
-	 */
+	 */ 
+
 	public function uncacheItemGroup(keys:Array<String>, uncacheFunction:T->Void)
 	{
 		for (p in 0...keys.length)
@@ -81,7 +88,8 @@ class TypedCache<T>
 	/**
 	 * Uncaches everything in this cache
 	 * @param uncacheFunction A function to properly close all the items before uncaching (This runs before the function uncaches the items!)
-	 */
+	 */    
+
 	public inline function uncacheAll(uncacheFunction:T->Void)
 	{
 		for (item in cache)
@@ -94,6 +102,7 @@ class TypedCache<T>
 	 * @param path The path to the item
 	 * @return Bool
 	 */
+
 	public inline function exists(key:String):Bool
 		return cache.exists(key);
 
@@ -102,6 +111,7 @@ class TypedCache<T>
 	@param key The key paired to the item you want to retrieve
 	@return `T`
 	*/
+	
 	public inline function get(key:String)
 		return cache.get(key);
 }
