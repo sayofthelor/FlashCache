@@ -10,9 +10,13 @@ using StringTools;
 */
 
 class ImageCache {
-	public static var cacheFlxGraphic:Map<String, FlxGraphic>;
-	public var assetPath:String = "assets/";
-	public var extension:String = "png";
+	private var cacheFlxGraphic:Map<String, FlxGraphic>;
+	private var assetPath:String = "assets/";
+	private var extension:String = "png";
+
+	public static inline function toString():String {
+		return "ImageCache instance \\\\ Cached assets: " + cacheFlxGraphic.length + " \\\\ Asset path: " + assetPath;
+	}
 
 	/**
 	 * Initializes `FlxCache`
@@ -48,6 +52,12 @@ class ImageCache {
 		cacheFlxGraphic.set((makeOnlyPathName ? path : epicPath), graphic);
 		trace("Cached image: " + epicPath);
 		return graphic;
+	}
+
+	public function cacheGraphicGroup(keys:Array<String>):Void {
+		for (tag in keys) {
+			cacheGraphic(tag);
+		}
 	}
 
 	public function getGraphic(path:String):Null<FlxGraphic> {

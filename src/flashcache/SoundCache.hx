@@ -5,6 +5,7 @@ import openfl.media.Sound;
 import openfl.utils.AssetType;
 
 /*
+    DO NOT USE THIS IT'S STUPID
     Class to cache sounds into OpenFL's sound cache.
     Cached sounds can be played with FlxG.sound.play(path); or FlxG.sound.playMusic(path);
     Pretty much just FlxG.sound.cache with a few extra features.

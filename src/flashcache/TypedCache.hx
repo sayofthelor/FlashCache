@@ -5,16 +5,25 @@ import openfl.utils.Assets;
 
 class TypedCache<T>
 {
-	public var cache:Map<String, T>;
+	private var cache:Map<String, T>;
+	private var thingName:String = "TypedCache";
+
+	public static inline function toString():String {
+		return thingName + " instance \\\\ Cached assets: " + cache.length;
+	}
 
 	/**
 	 * Cache an entry of data type `T`
+	 * Defined when you create the variable, like an Array
+	 * Example: var cache:TypedCache<BitmapData> = new TypedCache<BitmapData>();
 	 * @param path The path to your file
 	 * @param cachingFunction A function to run to retrieve the data from whatever you are using.
 	 */
+
 	public function new()
 	{
 		cache = new Map<String, T>();
+		thingName = (Type.getClassName(T) == "Dynamic" || "Any") ? "DynamicCache" : "TypedCache<" + Type.getClassName(T) + ">";
 	}
 
 	public function cacheItem(key:String, item:T, ?cachingFunction:T->Void)
