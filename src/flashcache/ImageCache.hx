@@ -10,7 +10,7 @@ using StringTools;
 */
 
 class ImageCache {
-	public static var cacheFlxGraphic:Map<String, FlxGraphic>;
+	public var cacheFlxGraphic:Map<String, FlxGraphic>;
 	public var assetPath:String = "assets/";
 	public var extension:String = "png";
 
