@@ -19,7 +19,7 @@ class ImageCache {
 	 * @return String
 	 */
 
-	public static inline function toString():String {
+	public inline function toString():String {
 		return "ImageCache instance \\\\ Cached assets: " + cacheFlxGraphic.length + " \\\\ Asset path: " + assetPath;
 	}
 
