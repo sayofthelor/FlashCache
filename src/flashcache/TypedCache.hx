@@ -13,8 +13,8 @@ class TypedCache<T>
 	 * @return String
 	 */
 
-	public static inline function toString():String {
-		return thingName + " instance \\\\ Cached assets: " + cache.length;
+	public inline function toString():String {
+		return thingName + " instance";
 	}
 
 	/**
