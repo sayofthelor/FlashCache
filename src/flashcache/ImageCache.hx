@@ -13,6 +13,13 @@ class ImageCache {
 	private var cacheFlxGraphic:Map<String, FlxGraphic>;
 	private var assetPath:String = "assets/";
 	private var extension:String = "png";
+	
+	public var length(get, never):Int;
+	public function get_length():Int {
+		var l:Int = 0;
+		for (item in cache) l++;
+		return l;
+	}
 
 	/**
 	 * Automatically called when traced, added to a string, etc.

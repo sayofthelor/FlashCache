@@ -8,6 +8,13 @@ class TypedCache<T>
 	private var cache:Map<String, T>;
 	private var thingName:String = "TypedCache";
 
+	public var length(get, never):Int;
+	public function get_length():Int {
+		var l:Int = 0;
+		for (item in cache) l++;
+		return l;
+	}
+
 	/**
 	 * Automatically called when traced, added to a string, etc.
 	 * @return String
