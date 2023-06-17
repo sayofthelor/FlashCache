@@ -3,6 +3,8 @@ package flashcache;
 import openfl.Assets;
 import openfl.media.Sound;
 import openfl.utils.AssetType;
+import lime.media.vorbis.VorbisFile;
+import lime.media.AudioBuffer;
 
 /*
     DO NOT USE THIS IT'S STUPID
@@ -12,9 +14,15 @@ import openfl.utils.AssetType;
 */
 class SoundCache {
     public function new() {}
-    public function cacheSound(path:String):Sound {
+    public function cacheSound(path:String, ?stream:Bool = false):Sound {
         if (Assets.exists(path, AssetType.SOUND) || Assets.exists(path, AssetType.MUSIC))
-			return Assets.getSound(path, true);
+		var sound:Sound = null;
+	        #if lime_vorbis
+		if (stream)
+                        return sound = Sound.fromAudioBuffer(AudioBuffer.fromVorbisFile(VorbisFile.fromFile(path));
+		else
+		#end
+		        return sound = Assets.getSound(path, true);
 		trace('Sound not found at ' + path);
 		return null;
     }
