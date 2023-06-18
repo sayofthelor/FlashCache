@@ -35,7 +35,7 @@ class TypedCache<T>
 	public function new()
 	{
 		cache = new Map<String, T>();
-		thingName = (Type.getClassName(T) == "Dynamic" || "Any") ? "DynamicCache" : "TypedCache<" + Type.getClassName(T) + ">";
+		thingName = (Type.getClassName(T) == "Dynamic" || Type.getClassName(T) == "Any") ? "DynamicCache" : "TypedCache<" + Type.getClassName(T) + ">";
 	}
 
 	public function cacheItem(key:String, item:T, ?cachingFunction:T->Void)
