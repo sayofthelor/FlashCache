@@ -1,6 +1,7 @@
 package flashcache;
 import openfl.display.BitmapData;
 import flixel.graphics.FlxGraphic;
+import openfl.display3D.textures.RectangleTexture;
 using StringTools;
 
 /*
@@ -48,7 +49,7 @@ class ImageCache {
 	 * @param makeOnlyPathName determines whether or not the image key includes assetPath and the file extension.
 	 */
 	 
-	public function cacheGraphic(path:String, ?makeOnlyPathName:Bool = false):FlxGraphic {
+	public function cacheGraphic(path:String, ?makeOnlyPathName:Bool = false, ?GPUCache:Bool = false):FlxGraphic {
 		var data:BitmapData;
 		var epicPath:String = assetPath + (assetPath == "" ? "" : "/") + path + '.' + extension;
 
@@ -56,12 +57,21 @@ class ImageCache {
 			return null; // prevents duplicates
 		}
 
-        try (data = BitmapData.fromFile(epicPath))
-        catch(e) {
-			trace("Error loading image: " + path);
+                try (data = BitmapData.fromFile(epicPath))
+                catch(e) {
+		        trace("Error loading image: " + path);
 			return null;
-        }
+                }
 
+		if (data != null && GPUCache){
+		        var texture:RectangleTexture = FlxG.stage.context3D.createRectangleTexture(data.width, data.height, BGRA, true);
+			texture.uploadFromBitmapData(data);
+			data.image.data = null;
+			data.dispose();
+			data.disposeImage();
+			data = BitmapData.fromTexture(texture);
+			
+		}
 		var graphic:FlxGraphic = FlxGraphic.fromBitmapData(data);
 		graphic.persist = true;
 		graphic.destroyOnNoUse = false;

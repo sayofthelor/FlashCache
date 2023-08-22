@@ -87,7 +87,8 @@ class TypedCache<T>
 	{
 		for (p in 0...keys.length)
 		{
-			uncacheFunction(cache.get(keys[p]));
+			if (uncacheFunction != null)
+			        uncacheFunction(cache.get(keys[p]));
 			cache.exists(keys[p]) ? cache.remove(keys[p]) : null;
 		}
 	}
@@ -100,7 +101,8 @@ class TypedCache<T>
 	public inline function uncacheAll(uncacheFunction:T->Void)
 	{
 		for (item in cache)
-			uncacheFunction(item);
+			if (uncacheFunction != null)
+			        uncacheFunction(item);
 		cache.clear();
 	}
 
